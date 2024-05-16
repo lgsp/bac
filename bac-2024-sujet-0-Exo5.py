@@ -994,10 +994,113 @@ class Bac2024Sujet0Exo5Question3Arbre(Scene):
         T_5 = (3, 8, 14) # trois_un_deux
         T_6 = (3, 9, 15) # trois_deux_un
 
+        L_1 = [
+            Tex(
+                true_labels[t],
+                color=vertices_colors[t]["color"]
+            ) for t in T_1
+        ]
+        L_2 = [
+            Tex(
+                true_labels[t],
+                color=vertices_colors[t]["color"]
+            ) for t in T_2
+        ]
+        L_3 = [
+            Tex(
+                true_labels[t],
+                color=vertices_colors[t]["color"]
+            ) for t in T_3
+        ]
+        L_4 = [
+            Tex(
+                true_labels[t],
+                color=vertices_colors[t]["color"]
+            ) for t in T_4
+        ]
+        L_5 = [
+            Tex(
+                true_labels[t],
+                color=vertices_colors[t]["color"]
+            ) for t in T_5
+        ]
+        L_6 = [
+            Tex(
+                true_labels[t],
+                color=vertices_colors[t]["color"]
+            ) for t in T_6
+        ]
+
+        pos = [
+            (g[10], g[11], g[12], g[13], g[14], g[15]),
+            (0.5 * DOWN, 2.5 * DOWN, 4.5 * DOWN)
+        ]
         self.play(
-            Write(Tex(true_labels[T_1[0]]).next_to(g[10], DOWN))
+            *[Write(L_1[i].next_to(pos[0][0], pos[1][i])) for i in range(3)],
+            # [L_1[i].animate.next_to(pos[0][0], pos[1][i]) for i in range(3)],
+            # L_1[0].animate.next_to(pos[0][0], pos[1][0]),
+            # L_1[1].animate.next_to(pos[0][0], pos[1][1]),
+            # L_1[2].animate.next_to(pos[0][0], pos[1][2]),
+            
         )
         self.wait()
+
+        L_1VGroup = VGroup(*L_1)
+        box_L_1 = SurroundingRectangle(L_1VGroup)
+        self.play(Write(box_L_1))
+        self.wait()
+                  
+        
+        self.play(
+            *[Write(L_2[i].next_to(pos[0][1], pos[1][i])) for i in range(3)],
+        )
+        self.wait()
+
+        L_2VGroup = VGroup(*L_2)
+        box_L_2 = SurroundingRectangle(L_2VGroup)
+        self.play(Write(box_L_2))
+        self.wait()
+        
+        self.play(
+            *[Write(L_3[i].next_to(pos[0][2], pos[1][i])) for i in range(3)],
+        )
+        self.wait()
+
+        L_3VGroup = VGroup(*L_3)
+        box_L_3 = SurroundingRectangle(L_3VGroup)
+        self.play(Write(box_L_3))
+        self.wait()
+        
+        self.play(
+            *[Write(L_4[i].next_to(pos[0][3], pos[1][i])) for i in range(3)],
+        )
+        self.wait()
+
+        L_4VGroup = VGroup(*L_4)
+        box_L_4 = SurroundingRectangle(L_4VGroup)
+        self.play(Write(box_L_4))
+        self.wait()
+
+        self.play(
+            *[Write(L_5[i].next_to(pos[0][4], pos[1][i])) for i in range(3)],
+        )
+        self.wait()
+        
+        L_5VGroup = VGroup(*L_5)
+        box_L_5 = SurroundingRectangle(L_5VGroup)
+        self.play(Write(box_L_5))
+        self.wait()
+
+        self.play(
+            *[Write(L_6[i].next_to(pos[0][5], pos[1][i])) for i in range(3)],
+        )
+        self.wait()
+        L_6VGroup = VGroup(*L_6)
+        box_L_6 = SurroundingRectangle(L_6VGroup)
+        self.play(Write(box_L_6))
+        self.wait()
+        
+        boxes_L = [box_L_1, box_L_2, box_L_3, box_L_4, box_L_5, box_L_6]
 
         t0 = Table(
             [
@@ -1050,13 +1153,26 @@ class Bac2024Sujet0Exo5Question3Arbre(Scene):
         for i in range(len(ent)):
             ent[i].set_color(table_colors[i])
 
-        sort1 = SurroundingRectangle(ent[0:3])
-        sort2 = SurroundingRectangle(ent[3:6])
-        sort3 = SurroundingRectangle(ent[6:9])
-        sort4 = SurroundingRectangle(ent[9:12])
-        sort5 = SurroundingRectangle(ent[12:15])
-        sort6 = SurroundingRectangle(ent[15:18])
-        sorts = [sort1, sort2, sort3, sort4, sort5, sort6]
+        sort1_H = SurroundingRectangle(ent[0:3])
+        sort1_V = SurroundingRectangle(ent[0:3])
+        
+        sort2_H = SurroundingRectangle(ent[3:6])
+        sort2_V = SurroundingRectangle(ent[3:6])
+        
+        sort3_H = SurroundingRectangle(ent[6:9])
+        sort3_V = SurroundingRectangle(ent[6:9])
+        
+        sort4_H = SurroundingRectangle(ent[9:12])
+        sort4_V = SurroundingRectangle(ent[9:12])
+        
+        sort5_H = SurroundingRectangle(ent[12:15])
+        sort5_V = SurroundingRectangle(ent[12:15])
+        
+        sort6_H = SurroundingRectangle(ent[15:18])
+        sort6_V = SurroundingRectangle(ent[15:18])
+        
+        sorts_H = [sort1_H, sort2_H, sort3_H, sort4_H, sort5_H, sort6_H]
+        sorts_V = [sort1_V, sort2_V, sort3_V, sort4_V, sort5_V, sort6_V]
 
         table_illustrate = Title("Avec un tableau")
         self.play(
@@ -1067,7 +1183,7 @@ class Bac2024Sujet0Exo5Question3Arbre(Scene):
 
         
         self.play(
-            Write(sort1)
+            Write(sort1_H)
         )
         # self.play(Write(ent[1].next_to(ent[0], RIGHT)))
         # self.play(Write(ent[2].next_to(ent[1], RIGHT)))
@@ -1075,23 +1191,61 @@ class Bac2024Sujet0Exo5Question3Arbre(Scene):
         # self.play(Write(boxes[0]))
         self.wait()
 
-        for i in range(len(sorts) - 1):
+        for i in range(len(sorts_H) - 1):
             self.play(
-                ReplacementTransform(sorts[i], sorts[i+1]),
+                ReplacementTransform(sorts_V[i], boxes_L[i]),
+                ReplacementTransform(sorts_H[i], sorts_H[i+1]),
                 # Write(ent[i+3].next_to(ent[i+2], RIGHT)),
             )
             # self.play(Write(ent[i+4].next_to(ent[i+3], RIGHT)))
             # self.play(Write(ent[i+5].next_to(ent[i+4], RIGHT)))
             # boxes.append(SurroundingRectangle(ent[i+3:i+6]))
             self.wait()
-            
+        self.play(ReplacementTransform(sorts_H[-1], boxes_L[-1]))
+        self.wait()
+
+        
+class Bac2024Sujet0Exo5Question3Formule(Scene):
+    def construct(self):
+        msg1 = "Bac 2024 Sujet 0 Exercice 5"
+        title3 = Title(f"{msg1}")
+        self.add(title3.scale(1))
+        self.wait(2)
+
+        
+        formula = Title("Formule générale")
+        self.play(
+            ReplacementTransform(title3, formula),
+        )
+        self.wait()
+        
+        f_txt = [
+            r"Avec \(n\) objets distincts "
+            r"et \(p\) tirages sans remises on a :",
+            r"\(n\) possibilités au premier tirage ; ",
+            r"\(n - 1\) possibilités au second tirage ; ",
+            r"\(n - 2\) possibilités au troisième tirage ; ",
+            r"\(n - p + 1\) possibilités au \(p\)-ème tirage.",
+            r"Ainsi, d'après le principe multiplicatif, on a : ",
+            r"\(n\times (n - 1)\times\dots\times (n - p + 1) = \dfrac{n!}{(n - p)!}\)",
+            r"tirages distincts en tenant compte de l'ordre."
+        ]
+        f_tex = [Tex(f) for f in f_txt]
+        
+
+        disp_tex_list(self, 
+            previous_mobj=None,
+            tex_list=f_tex,
+            next2obj=formula,
+            direction=DOWN
+        )
 
         
         
 # Question 4
 class Bac2024Sujet0Exo5Question4(Scene):
     def construct(self):
-        msg1 = "Bac USA 28 mars 2023 Sujet 2 Exercice 4"
+        msg1 = "Bac 2024 Sujet 0 Exercice 5"
         title4 = Title(f"{msg1}")
         self.add(title4.scale(1))
         self.wait(2)
@@ -1099,14 +1253,12 @@ class Bac2024Sujet0Exo5Question4(Scene):
         
         question4 = Title("Question 4").scale(0.85)
         q4_txt = [
-            r"4. Pour participer à un jeu, un joueur doit payer 4€.",
-            r"Il lance ensuite un dé équilibré à six faces : ",
-            r"\(\bullet\) s'il obtient 1, il remporte 12€ ;",
-            r"\(\bullet\) s'il obtient un nombre pair, il remporte 3€ ;",
-            r"\(\bullet\) sinon, il ne remporte rien.",
-            r"En moyenne, le joueur : "
+            r"4. On effectue dix lancers d'une pièce de monnaie. ",
+            r"Le résultat d'un lancer est pile ou face.",
+            r"On note la liste ordonnée des dix résultats.",
+            r"Quel est le nombre de listes ordonnées possibles ?",
         ]
-        q4 = [Tex(r).scale(0.65) for r in q4_txt]
+        q4 = [Tex(r).scale(0.85) for r in q4_txt]
 
         disp_tex_list(self, 
             previous_mobj=None,
@@ -1115,10 +1267,10 @@ class Bac2024Sujet0Exo5Question4(Scene):
             direction=DOWN
         )
         
-        a = r"a. gagne 3,50€"
-        b = r"b. perd 3€"
-        c = r"c. perd 1,50€"
-        d = r"d. perd 0,50€"
+        a = r"a. \(2\times 10\)"
+        b = r"b. \(2^{10}\)"
+        c = r"c. \(1\times 2\times 3\times\dots \times 10\)"
+        d = r"d. \(\dfrac{1\times 2\times 3\times\dots \times 10}{1\times 2}\)"
         
         m1 = MobjectMatrix(
             [
@@ -1151,43 +1303,302 @@ class Bac2024Sujet0Exo5Question4(Scene):
         self.wait(4)
 
         ent = m1.get_entries()
-        sol_d = ent[3]
-        box_d = SurroundingRectangle(sol_d)
-        solution4 = Title("Réponse d")
+        sol_b = ent[1]
+        box_b = SurroundingRectangle(sol_b)
+        solution4 = Title("Réponse b")
         self.play(
             ReplacementTransform(attention_rep, solution4),
-            Write(box_d)
+            Write(box_b)
         )
         self.wait()
 
         
         explanation = Title("Explications")
+        self.play(
+            ReplacementTransform(solution4, explanation),
+            Unwrite(box_b)
+        )
+        self.wait()
 
-        dRight00 = r"Soit \(X\) la variable aléatoire indiquant le gain du joueur."
-        dRight01 = r"Les valeurs possibles pour \(X\) sont : \(\{8, -1, -4\}\)."
-        dRight02 = r"En effet, dans tous les cas il doit payer la partie."
-        dRight03 = r"Les probabilités associées sont : \(\left\{\frac{1}{6}, \frac{3}{6}, \frac{2}{6}\right\}\)."
-        dRight04 = r"D'où l'espérance de gain : "
-        dRight05 = r"\(E(X) = \frac{1}{6}(8\times 1 - 1\times 3 - 4\times 2)\)"
-        dRight06 = r"Finalement, \(E(X) = -\frac{3}{6} = -0,50\)"
         
-        dRight = [
-            dRight00,
-            dRight01,
-            dRight02,
-            dRight03,
-            dRight04,
-            dRight05,
-            dRight06
+        exp_b = [
+            r"Le mot ordonnée indique simplement qu'on tient compte ",
+            r"toutes les listes (même si elles ont le même nombre de pile).",
+            r"Ça veut juste dire qu'on compte toutes les feuilles de l'arbre.",
+            r"Chaque branche engendre 2 nouvelles branches.",
+            r"1er tirage : 2 branches, 2e tirage : 4 branches, 3e : 8 branches...",
+            r"10e tirage : \(2^{10}\) branches.",
         ]
-        Cr = [Tex(r).scale(0.65) for r in dRight]
-        disp_calculations(self, 
-            previous_mobj=None,
-            calcs=Cr,
-            next2obj=m1,
-            direction=DOWN
-            )
 
+        b_tex = [Tex(r).scale(0.85) for r in exp_b]
+        disp_tex_list(self, 
+            previous_mobj=m1,
+            tex_list=b_tex,
+            next2obj=q4[-1],
+            direction=DOWN
+        )
+        
+
+
+class Bac2024Sujet0Exo5Question4Arbre(Scene):
+    def construct(self):
+        msg1 = "Bac 2024 Sujet 0 Exercice 5"
+        title4 = Title(f"{msg1}")
+        self.add(title4.scale(1))
+        self.wait(2)
+
+        illustration = Title(r"Illustration pour \(n = 4\) lancers")
+        self.play(ReplacementTransform(title4, illustration))
+        self.wait()
+        
+        
+        vertices = list(range(31))
+        edges = [
+            (0, 1), (0, 2), 
+            (1, 3), (1, 4), (2, 5), (2, 6),
+            (3, 7), (3, 8), (4, 9), (4, 10), (5, 11), (5, 12), (6, 13), (6, 14),
+            (7, 15),(7, 16), (8, 17), (8, 18), (9, 19), (9, 20), (10, 21), (10, 22), (11, 23), (11, 24), (12, 25), (12, 26), (13, 27), (13, 28), (14, 29), (14, 30), 
+        ]
+        
+        true_labels = {
+            0:"L",
+            1:"P", 2:"F",
+            3:"P", 4:"F", 5:"P", 6:"F",
+            7:"P", 8:"F", 9:"P", 10: "F", 11:"P", 12:"F", 13:"P", 14:"F",
+            15:"P", 16:"F", 17:"P", 18:"F", 19:"P", 20:"F", 21:"P", 22:"F", 23:"P", 24:"F", 25:"P", 26:"F", 27:"P", 28:"F", 29:"P", 30:"F", 
+        }
+
+        vertices_colors = {
+            0: {"color": YELLOW},
+            1: {"color": RED}, 2: {"color": GREEN},
+            3: {"color": RED}, 4: {"color": GREEN},
+            5: {"color": RED}, 6: {"color": GREEN},
+            7: {"color": RED}, 8: {"color" : GREEN},
+            9: {"color": RED}, 10: {"color": GREEN},
+            11: {"color": RED}, 12: {"color": GREEN},
+            13: {"color": RED}, 14: {"color": GREEN},
+            15: {"color": RED}, 16: {"color": GREEN},
+            17: {"color": RED}, 18: {"color": GREEN},
+            19: {"color": RED}, 20: {"color": GREEN},
+            21: {"color": RED}, 22: {"color": GREEN},
+            23: {"color": RED}, 24: {"color": GREEN},
+            25: {"color": RED}, 26: {"color": GREEN},
+            27: {"color": RED}, 28: {"color": GREEN},
+            29: {"color": RED}, 30: {"color": GREEN},
+        }
+
+        edges_colors = {
+            (0, 1):{"stroke_color": RED},
+            (0, 2): {"stroke_color": GREEN}, 
+            (1, 3): {"stroke_color": RED},
+            (1, 4): {"stroke_color": GREEN},
+            (2, 5): {"stroke_color": RED},
+            (2, 6): {"stroke_color": GREEN},
+            (3, 7): {"stroke_color": RED},
+            (3, 8): {"stroke_color": GREEN},
+            (4, 9): {"stroke_color": RED},
+            (4, 10): {"stroke_color": GREEN},
+            (5, 11): {"stroke_color": RED},
+            (5, 12): {"stroke_color": GREEN},
+            (6, 13): {"stroke_color": RED},
+            (6, 14): {"stroke_color": GREEN},
+            (7, 15): {"stroke_color": RED},
+            (7, 16): {"stroke_color": GREEN},
+            (8, 17): {"stroke_color": RED},
+            (8, 18): {"stroke_color": GREEN},
+            (9, 19): {"stroke_color": RED},
+            (9, 20): {"stroke_color": GREEN},
+            (10, 21): {"stroke_color": RED},
+            (10, 22): {"stroke_color": GREEN},
+            (11, 23): {"stroke_color": RED},
+            (11, 24): {"stroke_color": GREEN},
+            (12, 25): {"stroke_color": RED},
+            (12, 26): {"stroke_color": GREEN},
+            (13, 27): {"stroke_color": RED},
+            (13, 28): {"stroke_color": GREEN},
+            (14, 29): {"stroke_color": RED},
+            (14, 30): {"stroke_color": GREEN}, 
+        }
+
+        
+        
+        g = Graph(
+            vertices, edges, layout="tree", root_vertex=0,
+            layout_scale=6.65, labels=true_labels, 
+                  edge_config=edges_colors,
+            vertex_config=vertices_colors,
+        )
+
+        tree_illustrate = Title("Avec un arbre")
+        self.play(
+            ReplacementTransform(illustration, tree_illustrate),
+            Create(g)
+        )
+        self.wait(2)
+
+        binary_labels = {
+            0:"L",
+            1:"0", 2:"1",
+            3:"0", 4:"1", 5:"0", 6:"1",
+            7:"0", 8:"1", 9:"0", 10: "1", 11:"0", 12:"1", 13:"0", 14:"1",
+            15:"0", 16:"1", 17:"0", 18:"1", 19:"0", 20:"1", 21:"0", 22:"1", 23:"0", 24:"1", 25:"0", 26:"1", 27:"0", 28:"1", 29:"0", 30:"1", 
+        }
+
+        g_binary = Graph(
+            vertices, edges, layout="tree", root_vertex=0,
+            layout_scale=6.65, labels=True, #binary_labels, 
+                  edge_config=edges_colors,
+            vertex_config=vertices_colors,
+        )
+
+        binary_tree = Title("Codons \(P = 0\) et \(F = 1\)")
+        self.play(
+            ReplacementTransform(tree_illustrate, binary_tree),
+            ReplacementTransform(g, g_binary)
+        )
+        self.wait(2)
+
+        T_1 = (1, 3, 7, 15) # PPPP
+        T_2 = (1, 3, 7, 16) # PPPF
+        T_3 = (1, 3, 8, 17) # PPFP
+        T_4 = (1, 3, 8, 18) # PPFF
+        T_5 = (1, 4, 9, 19) # PFPP
+        T_6 = (1, 4, 9, 20) # PFPF
+        T_7 = (1, 4, 10, 21) # PFFP
+        T_8 = (1, 4, 10, 22) # PFFF
+        T_9 = (2, 5, 11, 23) # FPPP
+        T_10 = (2, 5, 11, 24) # FPPF
+        T_11 = (2, 5, 12, 25) # FPFP
+        T_12 = (2, 5, 12, 26) # FPFF
+        T_13 = (2, 6, 13, 27) # FFPP
+        T_14 = (2, 6, 13, 28) # FFPF
+        T_15 = (2, 6, 14, 29) # FFFP
+        T_16 = (2, 6, 14, 30) # FFFF
+
+        T = [
+            T_1, T_2, T_3, T_4, T_5, T_6, T_7, T_8,
+            T_9, T_10, T_11, T_12, T_13, T_14, T_15, T_16,
+        ]
+
+        
+
+        L = []
+        L = [
+            L.append(
+                [
+                    Tex(
+                        binary_labels[t],
+                        color=vertices_colors[t]["color"]
+                    ) for t in Ti
+                ]) for Ti in T
+        ]
+        # L_1 = [
+        #     Tex(
+        #         true_labels[t],
+        #         color=vertices_colors[t]["color"]
+        #     ) for t in T_1
+        # ]
+        # L_2 = [
+        #     Tex(
+        #         true_labels[t],
+        #         color=vertices_colors[t]["color"]
+        #     ) for t in T_2
+        # ]
+        # L_3 = [
+        #     Tex(
+        #         true_labels[t],
+        #         color=vertices_colors[t]["color"]
+        #     ) for t in T_3
+        # ]
+        # L_4 = [
+        #     Tex(
+        #         true_labels[t],
+        #         color=vertices_colors[t]["color"]
+        #     ) for t in T_4
+        # ]
+        # L_5 = [
+        #     Tex(
+        #         true_labels[t],
+        #         color=vertices_colors[t]["color"]
+        #     ) for t in T_5
+        # ]
+        # L_6 = [
+        #     Tex(
+        #         true_labels[t],
+        #         color=vertices_colors[t]["color"]
+        #     ) for t in T_6
+        # ]
+
+        # pos = [
+        #     (g[10], g[11], g[12], g[13], g[14], g[15]),
+        #     (0.5 * DOWN, 2.5 * DOWN, 4.5 * DOWN)
+        # ]
+        # self.play(
+        #     *[Write(L_1[i].next_to(pos[0][0], pos[1][i])) for i in range(3)],
+        #     # [L_1[i].animate.next_to(pos[0][0], pos[1][i]) for i in range(3)],
+        #     # L_1[0].animate.next_to(pos[0][0], pos[1][0]),
+        #     # L_1[1].animate.next_to(pos[0][0], pos[1][1]),
+        #     # L_1[2].animate.next_to(pos[0][0], pos[1][2]),
+            
+        # )
+        # self.wait()
+
+        # L_1VGroup = VGroup(*L_1)
+        # box_L_1 = SurroundingRectangle(L_1VGroup)
+        # self.play(Write(box_L_1))
+        # self.wait()
+                  
+        
+        # self.play(
+        #     *[Write(L_2[i].next_to(pos[0][1], pos[1][i])) for i in range(3)],
+        # )
+        # self.wait()
+
+        # L_2VGroup = VGroup(*L_2)
+        # box_L_2 = SurroundingRectangle(L_2VGroup)
+        # self.play(Write(box_L_2))
+        # self.wait()
+        
+        # self.play(
+        #     *[Write(L_3[i].next_to(pos[0][2], pos[1][i])) for i in range(3)],
+        # )
+        # self.wait()
+
+        # L_3VGroup = VGroup(*L_3)
+        # box_L_3 = SurroundingRectangle(L_3VGroup)
+        # self.play(Write(box_L_3))
+        # self.wait()
+        
+        # self.play(
+        #     *[Write(L_4[i].next_to(pos[0][3], pos[1][i])) for i in range(3)],
+        # )
+        # self.wait()
+
+        # L_4VGroup = VGroup(*L_4)
+        # box_L_4 = SurroundingRectangle(L_4VGroup)
+        # self.play(Write(box_L_4))
+        # self.wait()
+
+        # self.play(
+        #     *[Write(L_5[i].next_to(pos[0][4], pos[1][i])) for i in range(3)],
+        # )
+        # self.wait()
+        
+        # L_5VGroup = VGroup(*L_5)
+        # box_L_5 = SurroundingRectangle(L_5VGroup)
+        # self.play(Write(box_L_5))
+        # self.wait()
+
+        # self.play(
+        #     *[Write(L_6[i].next_to(pos[0][5], pos[1][i])) for i in range(3)],
+        # )
+        # self.wait()
+        # L_6VGroup = VGroup(*L_6)
+        # box_L_6 = SurroundingRectangle(L_6VGroup)
+        # self.play(Write(box_L_6))
+        # self.wait()
+        
+        # boxes_L = [box_L_1, box_L_2, box_L_3, box_L_4, box_L_5, box_L_6]
 
 
 # Question 5

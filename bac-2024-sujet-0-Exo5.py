@@ -814,6 +814,7 @@ class Bac2024Sujet0Exo5Question3(Scene):
             r"compte de l'ordre des numéros ?"
         ]
         q3 = [Tex(t).scale(0.75) for t in q3_txt]
+        q3VGroup = VGroup(*q3)
         
         disp_tex_list(self, 
             previous_mobj=None,
@@ -854,12 +855,12 @@ class Bac2024Sujet0Exo5Question3(Scene):
         self.wait(4)
 
         ent = m1.get_entries()
-        sol_c = ent[2]
-        box_c = SurroundingRectangle(sol_c)
-        solution3 = Title("Réponse c")
+        sol_d = ent[3]
+        box_d = SurroundingRectangle(sol_d)
+        solution3 = Title("Réponse d")
         self.play(
             ReplacementTransform(attention_rep, solution3),
-            Write(box_c)
+            Write(box_d)
         )
         self.wait()
 
@@ -867,24 +868,47 @@ class Bac2024Sujet0Exo5Question3(Scene):
         explanation = Title("Explications")
 
         self.play(
-            Unwrite(box_c),
+            Unwrite(box_d),
             ReplacementTransform(solution3, explanation.scale(0.75))
         )
         self.wait()
         
-        C00 = r"Pour le premier tirage il y a 50 choix."
-        C01 = r"Pour le second tirage il ne reste plus que 49 choix."
-        C02 = r"Pour le troisième tirage il ne reste plus que 48 choix."
+        D00 = r"Il y a 50 choix pour le premier tirage, 49 pour le second et 48 pour le troisième."
+        D01 = r"Ce qui fait \(50\times 49\times 48\) choix possibles..."
+        D02 = r"Mais comme l'énoncé nous dit de ne pas tenir compte de l'ordre..."
+        D03 = r"Alors il faut diviser par le nombre de permutations de 3 éléments."
+        D04 = r"D'où le résultat : \(\dfrac{50\times 49\times 48}{1\times 2\times 3}\)"
         
-        C = [C00, C01, C02]
-        dC = [Tex(d).scale(0.75) for d in C]
-        dCVGroup = VGroup(*dC)
+        D = [D00, D01, D02, D03, D04]
+        dD = [Tex(d).scale(0.75) for d in D]
+        dDVGroup = VGroup(*dD)
         
 
         disp_tex_list(self, 
             previous_mobj=m1,
-            tex_list=dC,
+            tex_list=dD,
             next2obj=q3[-1],
+            direction=DOWN
+        )
+
+        
+        remark = [
+            r"On peut remarquer que : \(\dfrac{50\times 49\times 48}{1\times 2\times 3} = \dfrac{50!}{3!47!}\)",
+            r"C'est-à-dire \(\dfrac{50\times 49\times 48}{1\times 2\times 3} = \dfrac{50!}{3!(50 - 3)!}\)",
+            r"Soit \(\dfrac{50\times 49\times 48}{1\times 2\times 3} = \binom{50}{3}\)",
+            r"Ce qui signifie que choisir (simultanément) 3 éléments parmi 50 ",
+            r"est équivalent à  effectuer trois tirages sans remise ",
+            r"sans tenir compte de l'ordre."
+        ]
+
+        rem_tex = [Tex(r) for r in remark]
+
+        erase_all = VGroup(q3VGroup, dDVGroup)
+        
+        disp_tex_list(self, 
+            previous_mobj=erase_all,
+            tex_list=rem_tex,
+            next2obj=explanation,
             direction=DOWN
         )
 
@@ -1204,6 +1228,317 @@ class Bac2024Sujet0Exo5Question3Arbre(Scene):
         self.play(ReplacementTransform(sorts_H[-1], boxes_L[-1]))
         self.wait()
 
+        remark = [
+            r"Si on ne tient pas compte de l'ordre, ",
+            r"tous ces tirages sont équivalents.",
+            r"Il s'agit exactement du nombre de permutation de 3 éléments.",
+        ]
+
+        rem_tex = [Tex(r) for r in remark]
+        remVGroup = VGroup(*rem_tex)
+        
+        disp_tex_list(self, 
+            previous_mobj=t0,
+            tex_list=rem_tex,
+            next2obj=table_illustrate,
+            direction=DOWN
+        )
+
+        s1, s2, s3 = [Square(color=YELLOW) for _ in range(3)]
+        squares = VGroup(s1, s2, s3)
+
+        perm = Title("Permutations")
+        # self.play(*[Write(o) for o in [s1, s2, s3]])
+        self.play(
+            ReplacementTransform(table_illustrate, perm),
+            ReplacementTransform(remVGroup, squares)
+        )
+        self.wait()
+        
+        # align squares next to one another
+        self.play(
+            s1.animate.next_to(s2, LEFT),
+            s3.animate.next_to(s2, RIGHT)
+        )
+
+        # create numbers for each of them
+        colors = [BLUE, WHITE, RED]
+        nums = [Tex(f"\({i+1}\)", color=colors[i]).scale(3) for i in range(3)]
+        t1, t2, t3 = nums
+        
+        t1.move_to(s1)
+        t2.move_to(s2)
+        t3.move_to(s3)
+
+        self.play(
+            *[Write(o) for o in nums],
+            ReplacementTransform(boxes_L[0], s1),
+            ReplacementTransform(boxes_L[1], s1),
+            ReplacementTransform(boxes_L[2], s2),
+            ReplacementTransform(boxes_L[3], s2),
+            ReplacementTransform(boxes_L[4], s3),
+            ReplacementTransform(boxes_L[5], s3),
+        )
+        self.wait()
+
+        permutations3 = [L_1, L_2, L_3, L_4, L_5, L_6]
+        L = permutations3
+        for i in range(len(L)):
+            if i == 1:
+                self.play(
+                    Swap(s2, s3),
+                    Swap(t2, t3)
+                )
+                self.wait()
+            elif i == 2:
+                self.play(
+                    Swap(s2, s1),
+                    Swap(t2, t1)
+                )
+                self.wait()
+                self.play(
+                    Swap(s3, s1),
+                    Swap(t3, t1)
+                )
+                self.wait()
+            elif i == 3:
+                self.play(
+                    Swap(s3, s1),
+                    Swap(t3, t1)
+                )
+                self.wait()
+            elif i == 4:
+                self.play(
+                    Swap(s2, s3),
+                    Swap(t2, t3)
+                )
+                self.wait()
+                self.play(
+                    Swap(s1, s2),
+                    Swap(t1, t2)
+                )
+                self.wait()
+            elif i == 5:
+                self.play(
+                    Swap(s1, s2),
+                    Swap(t1, t2)
+                )
+                self.wait()
+
+            self.play(
+                *[ReplacementTransform(L[i][j], nums[j]) for j in range(3)]
+            )
+            self.wait()
+        
+                  
+# Question 3 Généralisation de l'arbre
+class Bac2024Sujet0Exo5Question3Trees(Scene):
+    def construct(self):
+        msg1 = "Bac 2024 Sujet 0 Exercice 5"
+        title3 = Title(f"{msg1}")
+        self.add(title3.scale(1))
+        self.wait(2)
+
+        
+        generalize = Title("Vers une généralisation").scale(0.85)
+        gen_txt = [
+            r"Voyons ce qui se passe avec 4 boules au total.",
+            r"On tire toujours 3 boules sans remise",
+            r"et sans tenir compte de l'ordre.",
+        ]
+        gen = [Tex(r).scale(0.85) for r in gen_txt]
+        genVGroup = VGroup(*gen)
+        
+        disp_tex_list(self, 
+            previous_mobj=None,
+            tex_list=gen,
+            next2obj=title3,
+            direction=DOWN
+        )
+        
+        
+        self.play(
+            ReplacementTransform(title3, generalize),
+        )
+
+        vertices = list(range(41))
+        edges = [
+            # 1er tirage 4 possibilités
+            (0, 1), (0, 2), (0, 3), (0, 4),
+            # 2eme tirage 3 possibilités pour chacune des 4 options
+            (1, 5), (1, 6), (1, 7), # (1, 2), (1, 3), (1, 4)
+            (2, 8), (2, 9), (2, 10), # (2, 1), (2, 3), (2, 4)
+            (3, 11), (3, 12), (3, 13), # (3, 1), (3, 2), (3, 4)
+            (4, 14), (4, 15), (4, 16), # (4, 1), (4, 2), (4, 3)
+            # 3ème tirage 2 possibilités pour chacune des 3 options
+            # du 2nd tirage
+            (5, 17), (5, 18), # (1, 2, 3), (1, 2, 4)
+            (6, 19), (6, 20), # (1, 3, 4), (1, 3, 2)
+            (7, 21), (7, 22), # (1, 4, 2), (1, 4, 3)
+            (8, 23), (8, 24), # (2, 1, 4), (2, 1, 3)
+            (9, 25), (9, 26), # (2, 3, 4), (2, 3, 1)
+            (10, 27), (10, 28), # (2, 4, 1), (2, 4, 3)
+            (11, 29), (11, 30), # (3, 1, 4), (3, 1, 2)
+            (12, 31), (12, 32), # (3, 2, 1), (3, 2, 4)
+            (13, 33), (13, 34), # (3, 4, 1), (3, 4, 2)
+            (14, 35), (14, 36), # (4, 1, 2), (4, 1, 3)
+            (15, 37), (15, 38), # (4, 2, 3), (4, 2, 1)
+            (16, 39), (16, 40), # (4, 3, 1), (4, 3, 2)
+        ]
+        
+        true_labels = {
+            0:"D",
+            1:"1", 2:"2", 3:"3", 4:"4",
+            5:"2", 6:"3", 7:"4", 8:"1",
+            9:"3", 10: "4", 11:"1", 12:"2",
+            13:"4", 14:"1", 15:"2", 16:"3",
+            17:"3", 18:"4", 19:"4", 20:"2",
+            21:"2", 22:"3", 23:"4", 24:"3",
+            25:"4", 26:"1", 27:"1", 28:"3",
+            29:"4", 30:"2", 31:"1", 32:"4",
+            33:"1", 34:"2", 35:"2", 36:"3",
+            37:"3", 38:"1", 39:"1", 40:"2"
+        }
+
+
+        color_values = {
+            "D": {"color": YELLOW},
+            "1": {"color": BLUE},
+            "2": {"color": WHITE},
+            "3": {"color": RED},
+            "4": {"color": PURPLE}
+        }
+
+        vertices_colors = {
+            i : color_values[true_labels[i]] for i in range(41)
+        }
+        
+        edges_colors = {
+            edge : {
+                "stroke_color": color_values[true_labels[edge[1]]]["color"]
+            } for edge in edges
+        }
+        
+        g = Graph(
+            vertices, edges, layout="tree", root_vertex=0,
+            layout_scale=6, labels=True,#true_labels, 
+                  # edge_config=edges_colors,
+            # vertex_config=vertices_colors,
+            layout_config={
+                "vertex_spacing" : (0.75, 1.75),
+            }
+        )
+
+        self.play(
+            FadeOut(genVGroup),
+            Create(g.next_to(generalize, 0.25 * DOWN).scale(0.75)),
+            g.animate.shift(UP)
+        )
+        self.wait(2)
+
+
+        T_1 = (1, 5, 17) # 
+        T_2 = (1, 5, 18) # 
+        T_3 = (1, 6, 19) # 
+        T_4 = (1, 6, 20) # 
+        T_5 = (1, 7, 21) # 
+        T_6 = (1, 7, 22) # 
+        T_7 = (2, 8, 23) # 
+        T_8 = (2, 8, 24) # 
+        T_9 = (2, 9, 25) # 
+        T_10 = (2, 9, 26) #
+        T_11 = (2, 10, 27) # 
+        T_12 = (2, 10, 28) # 
+        T_13 = (3, 11, 29) # 
+        T_14 = (3, 11, 30) # 
+        T_15 = (3, 12, 31) # 
+        T_16 = (3, 12, 32) #
+        T_17 = (3, 13, 33) #
+        T_18 = (3, 13, 34) # 
+        T_19 = (4, 14, 35) #
+        T_20 = (4, 14, 36) #
+        T_21 = (4, 15, 37) #
+        T_22 = (4, 15, 38) #
+        T_23 = (4, 16, 39) #
+        T_24 = (4, 16, 40) # 
+        
+        T = [
+            T_1, T_2, T_3, T_4, T_5, T_6, T_7, T_8,
+            T_9, T_10, T_11, T_12, T_13, T_14, T_15, T_16,
+            T_17, T_18, T_19, T_20, T_21, T_22, T_23, T_24
+        ]
+
+    
+        L = [
+            [
+                Tex(
+                    true_labels[t],
+                    color=vertices_colors[t]["color"]
+                ) for t in T_i
+            ] for T_i in T
+        ]
+
+
+        pos = [
+            [g[i] for i in range(17, 41)],
+            (0.5 * DOWN, 2.5 * DOWN, 4.5 * DOWN)
+        ]        
+        for i in range(len(L)):
+            self.play(
+                *[
+                    Write(
+                        L[i][j].next_to(
+                            pos[0][i],
+                            pos[1][j]
+                        )
+                    ) for j in range(3) 
+                ]
+            )
+            #self.wait()
+
+        L_VGroups = [VGroup(*L_i) for L_i in L]
+        boxes_L = [
+            SurroundingRectangle(
+                VGroup(*L_i),
+                color=GREEN,
+                corner_radius=0.2
+            ) for L_i in L
+        ]
+
+        
+        blocks = [VGroup(*L_VGroups[i:i+6]) for i in range(19)]
+        block_boxes = [SurroundingRectangle(b) for b in blocks]
+        
+        self.play(Write(block_boxes[0]))
+        self.wait()
+
+        tree_1 = VGroup(
+            g[1], g[5], g[6], g[7],
+            g[17], g[18], g[19],
+            g[20], g[21], g[22]
+        )
+        
+        tree_1_box = SurroundingRectangle(tree_1)
+        self.play(Write(tree_1_box))
+        self.wait()
+
+        def fadeout_doubles(self, boxes, lists):
+            for i in range(3):
+                self.play(
+                    *[Write(b) for b in [boxes[i], boxes[i + 3]]],
+                )
+                self.wait()
+
+                self.play(
+                    ReplacementTransform(boxes[i+3], boxes[i]),
+                    *[FadeOut(o) for o in lists[i+3]],
+                    Unwrite(boxes[i]),
+                )
+                self.wait()
+            
+        fadeout_doubles(self, boxes=boxes_L, lists=L)    
+        
+        
         
 class Bac2024Sujet0Exo5Question3Formule(Scene):
     def construct(self):

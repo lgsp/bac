@@ -1386,23 +1386,76 @@ class Bac2024Sujet0Exo5Question3Trees(Scene):
             (16, 39), (16, 40), # (4, 3, 1), (4, 3, 2)
         ]
         
+        #      1               2               3               4
+        # 2    3    4     3    4    1     4    1    2     1    2    3
+        #3 4  4 2  2 3   4 1  1 3  3 4   1 2  2 4  4 1   2 3  3 1  1 2
+
         true_labels = {
-            0:"D",
-            1:"1", 2:"2", 3:"3", 4:"4",
-            5:"2", 6:"3", 7:"4", 8:"1",
-            9:"3", 10: "4", 11:"1", 12:"2",
-            13:"4", 14:"1", 15:"2", 16:"3",
-            17:"3", 18:"4", 19:"4", 20:"2",
-            21:"2", 22:"3", 23:"4", 24:"3",
-            25:"4", 26:"1", 27:"1", 28:"3",
-            29:"4", 30:"2", 31:"1", 32:"4",
-            33:"1", 34:"2", 35:"2", 36:"3",
-            37:"3", 38:"1", 39:"1", 40:"2"
+            #
+            # Level 0: Start
+            #
+            0:"S", 
+
+            #
+            # Level 1: First Draw
+            #      1               2               3               4
+            1:"4", 2:"3", 3:"2", 4:"1",
+
+            #
+            # Level 2: Second Draw
+            #      1               2               3               4
+            # 2    3    4     3    4    1     4    1    2     1    2    3
+            
+            # 4's children (4, ?)
+            5:"3", 6:"2", 7:"1",
+            
+            # 3's children (3, ?)
+            8:"2", 9:"1", 10: "4",
+            
+            # 2's children (2, ?)
+            11:"1", 12:"4", 13:"3",
+            
+            # 1's children (1, ?)
+            14:"4", 15:"3", 16:"2",
+
+            #
+            # Level 3: Third Draw
+            #      1               2               3               4
+            # 2    3    4     3    4    1     4    1    2     1    2    3
+            #3 4  4 2  2 3   4 1  1 3  3 4   1 2  2 4  4 1   2 3  3 1  1 2
+    
+            # 3's children (4, 3, ?)
+            17:"2", 18:"1",
+            # 2's children (4, 2, ?)
+            19:"1", 20:"3",
+            # 1's children (4, 1, ?)
+            21:"3", 22:"2",
+
+            # 2's children (3, 2, ?)
+            23:"1", 24:"4",
+            # 1's children (3, 1, ?)
+            25:"4", 26:"2",
+            # 4's children (3, 4, ?)
+            27:"2", 28:"1",
+            
+            # 1's children (2, 1, ?)
+            29:"4", 30:"3",
+            # 4's children (2, 4, ?)
+            31:"3", 32:"1",
+            # 3's children (2, 3, ?)
+            33:"1", 34:"4",
+
+            # 4's children (1, 4, ?)
+            35:"3", 36:"2",
+            # 3's children (1, 3, ?)
+            37:"2", 38:"4",
+            # 2's children (1, 2, ?)
+            39:"4", 40:"3"
         }
 
 
         color_values = {
-            "D": {"color": YELLOW},
+            "S": {"color": YELLOW},
             "1": {"color": BLUE},
             "2": {"color": WHITE},
             "3": {"color": RED},
@@ -1421,9 +1474,9 @@ class Bac2024Sujet0Exo5Question3Trees(Scene):
         
         g = Graph(
             vertices, edges, layout="tree", root_vertex=0,
-            layout_scale=6, labels=True,#true_labels, 
-                  # edge_config=edges_colors,
-            # vertex_config=vertices_colors,
+            layout_scale=6, labels=true_labels, 
+                  edge_config=edges_colors,
+            vertex_config=vertices_colors,
             layout_config={
                 "vertex_spacing" : (0.75, 1.75),
             }
@@ -1437,30 +1490,64 @@ class Bac2024Sujet0Exo5Question3Trees(Scene):
         self.wait(2)
 
 
-        T_1 = (1, 5, 17) # 
-        T_2 = (1, 5, 18) # 
-        T_3 = (1, 6, 19) # 
-        T_4 = (1, 6, 20) # 
-        T_5 = (1, 7, 21) # 
-        T_6 = (1, 7, 22) # 
-        T_7 = (2, 8, 23) # 
-        T_8 = (2, 8, 24) # 
-        T_9 = (2, 9, 25) # 
-        T_10 = (2, 9, 26) #
-        T_11 = (2, 10, 27) # 
-        T_12 = (2, 10, 28) # 
-        T_13 = (3, 11, 29) # 
-        T_14 = (3, 11, 30) # 
-        T_15 = (3, 12, 31) # 
-        T_16 = (3, 12, 32) #
-        T_17 = (3, 13, 33) #
-        T_18 = (3, 13, 34) # 
-        T_19 = (4, 14, 35) #
-        T_20 = (4, 14, 36) #
-        T_21 = (4, 15, 37) #
-        T_22 = (4, 15, 38) #
-        T_23 = (4, 16, 39) #
-        T_24 = (4, 16, 40) # 
+        # Level 1 = 1
+        
+        # Level 2 = 2 (1, 2, ?)
+        T_1 = (4, 16, 40) # (1, 2, 3)
+        T_2 = (4, 16, 39) # (1, 2, 4)
+
+        # Level 2 = 3 (1, 2, ?)
+        T_3 = (4, 15, 38) # (1, 3, 4)
+        T_4 = (4, 15, 37) # (1, 3, 2)
+
+        # Level 2 = 4 (1, 4, ?)
+        T_5 = (4, 14, 36) # (1, 4, 2)
+        T_6 = (4, 14, 35) # (1, 4, 3)
+
+        
+        # Level 1 = 2
+
+        # Level 2 = 3 (2, 3, ?)
+        T_7 = (3, 13, 34) # (2, 3, 4)
+        T_8 = (3, 13, 33) # (2, 3, 1)
+
+        # Level 2 = 4 (2, 4, ?)
+        T_9 = (3, 12, 32)  # (2, 4, 1)
+        T_10 = (3, 12, 31) # (2, 4, 3)
+
+        # Level 2 = 1 (2, 1, ?)
+        T_11 = (3, 11, 30) # (2, 1, 3)
+        T_12 = (3, 11, 29) # (2, 1, 4)
+
+        
+        # Level 1 = 3
+
+        # Level 2 = 4 (3, 4, ?)
+        T_13 = (2, 10, 28) # (3, 4, 1)
+        T_14 = (2, 10, 27) # (3, 4, 2)
+
+        # Level 2 = 1 (3, 1, ?)
+        T_15 = (2, 9, 26) # (3, 1, 2)
+        T_16 = (2, 9, 25) # (3, 1, 4)
+
+        # Level 2 = 2 (3, 2, ?)
+        T_17 = (2, 8, 24) # (3, 2, 4)
+        T_18 = (2, 8, 23) # (3, 2, 1)
+
+        
+        # Level 1 = 4
+
+        # Level 2 = 1 (4, 1, ?)
+        T_19 = (1, 7, 22) # (4, 1, 2)
+        T_20 = (1, 7, 21) # (4, 1, 3)
+
+        # Level 2 = 2 (4, 2, ?)
+        T_21 = (1, 6, 20) # (4, 2, 3)
+        T_22 = (1, 6, 19) # (4, 2, 1)
+
+        # Level 2 = 3 (4, 3, ?)
+        T_23 = (1, 5, 18) # (4, 3, 1)
+        T_24 = (1, 5, 17) # (4, 3, 2)
         
         T = [
             T_1, T_2, T_3, T_4, T_5, T_6, T_7, T_8,
@@ -1480,7 +1567,7 @@ class Bac2024Sujet0Exo5Question3Trees(Scene):
 
 
         pos = [
-            [g[i] for i in range(17, 41)],
+            [g[i] for i in range(40, 16, -1)],
             (0.5 * DOWN, 2.5 * DOWN, 4.5 * DOWN)
         ]        
         for i in range(len(L)):
@@ -1506,22 +1593,53 @@ class Bac2024Sujet0Exo5Question3Trees(Scene):
         ]
 
         
-        blocks = [VGroup(*L_VGroups[i:i+6]) for i in range(19)]
+        blocks = [VGroup(*L_VGroups[i:i+6]) for i in range(0, 19, 6)]
         block_boxes = [SurroundingRectangle(b) for b in blocks]
         
-        self.play(Write(block_boxes[0]))
-        self.wait()
+        subtree_1 = VGroup(
+            g[4],
+            g[16], g[15], g[14],
+            g[40], g[39],
+            g[38], g[37],
+            g[36], g[35]
+        )
+        subtree_1_box = SurroundingRectangle(subtree_1)
+        
+        subtree_2 = VGroup(
+            g[3],
+            g[13], g[12], g[11],
+            g[34], g[33],
+            g[32], g[31],
+            g[30], g[29]
+        )
+        subtree_2_box = SurroundingRectangle(subtree_2)
 
-        tree_1 = VGroup(
-            g[1], g[5], g[6], g[7],
-            g[17], g[18], g[19],
-            g[20], g[21], g[22]
+        
+        subtree_3 = VGroup(
+            g[2],
+            g[10], g[9], g[8],
+            g[28], g[27],
+            g[26], g[25],
+            g[24], g[23]
+        )
+        subtree_3_box = SurroundingRectangle(subtree_3)
+        
+        subtree_4 = VGroup(
+            g[1],
+            g[7], g[6], g[5],
+            g[22], g[21],
+            g[20], g[19],
+            g[18], g[17]
         )
         
-        tree_1_box = SurroundingRectangle(tree_1)
-        self.play(Write(tree_1_box))
-        self.wait()
-
+        subtree_4_box = SurroundingRectangle(subtree_4) 
+        
+        subtrees = [subtree_1, subtree_2, subtree_3, subtree_4]
+        subtrees_boxes = [
+            subtree_1_box, subtree_2_box,
+            subtree_3_box, subtree_4_box
+        ]
+        
         def fadeout_doubles(self, boxes, lists):
             for i in range(3):
                 self.play(
@@ -1535,8 +1653,272 @@ class Bac2024Sujet0Exo5Question3Trees(Scene):
                     Unwrite(boxes[i]),
                 )
                 self.wait()
-            
+
+
+        self.play(
+            *[Write(o) for o in [block_boxes[0], subtrees_boxes[0]]]
+        )
+        self.wait()
         fadeout_doubles(self, boxes=boxes_L, lists=L)    
+        
+        for i in range(3):
+            self.play(
+                ReplacementTransform(block_boxes[i], block_boxes[i+1]),
+                ReplacementTransform(subtrees_boxes[i], subtrees_boxes[i+1]),
+            )
+            self.wait()
+
+            fadeout_doubles(
+                self,
+                boxes=boxes_L[(i+1) * 6:],
+                lists=L[(i+1) * 6:]
+            )    
+
+        self.play(
+            *[FadeOut(o) for o in [block_boxes[-1], subtrees_boxes[-1]]]
+        )
+        self.wait()
+
+        boxes_L = [
+            SurroundingRectangle(
+                VGroup(*L_i),
+                color=GREEN,
+                corner_radius=0.2
+            ) for L_i in L
+        ]
+
+        def fadeout_irregular_doubles(self, triplets, boxes, LVGroups):
+            i_0, i_1, i_2 = triplets
+            self.play(
+                *[Write(boxes_L[i]) for i in triplets]
+            )
+            self.wait()
+
+            self.play(
+                *[ReplacementTransform(
+                    boxes[i],
+                    boxes[i_0]
+                ) for i in {i_1, i_2}
+                  ],
+                *[FadeOut(LVGroups[i]) for i in {i_1, i_2}]
+            )
+            self.wait()
+
+            self.play(FadeOut(boxes[i_0]))
+            self.wait()
+
+        triplets_of_doubles = [
+            [0, 7, 14], [1, 8, 18], [2, 12, 19], [6, 13, 20]
+        ]
+
+        for tod in triplets_of_doubles:
+            fadeout_irregular_doubles(
+                self,
+                triplets=tod,
+                boxes=boxes_L,
+                LVGroups=L_VGroups
+            )
+
+        
+            
+class Bac2024Sujet0Exo5Question3TreesGPT(Scene):
+    def construct(self):
+        msg1 = "Bac 2024 Sujet 0 Exercice 5"
+        title3 = Title(f"{msg1}")
+        self.add(title3.scale(1))
+        self.wait(2)
+
+        generalize = Title("Vers une généralisation").scale(0.85)
+        gen_txt = [
+            r"Voyons ce qui se passe avec 4 boules au total.",
+            r"On tire toujours 3 boules sans remise",
+            r"et sans tenir compte de l'ordre.",
+        ]
+        gen = [Tex(r).scale(0.85) for r in gen_txt]
+        genVGroup = VGroup(*gen)
+
+        disp_tex_list(self, 
+            previous_mobj=None,
+            tex_list=gen,
+            next2obj=title3,
+            direction=DOWN
+        )
+
+        self.play(
+            ReplacementTransform(title3, generalize),
+        )
+
+        vertices = list(range(41))
+        edges = [
+            (0, 1), (0, 2), (0, 3), (0, 4),
+            (1, 5), (1, 6), (1, 7),
+            (2, 8), (2, 9), (2, 10),
+            (3, 11), (3, 12), (3, 13),
+            (4, 14), (4, 15), (4, 16),
+            (5, 17), (5, 18),
+            (6, 19), (6, 20),
+            (7, 21), (7, 22),
+            (8, 23), (8, 24),
+            (9, 25), (9, 26),
+            (10, 27), (10, 28),
+            (11, 29), (11, 30),
+            (12, 31), (12, 32),
+            (13, 33), (13, 34),
+            (14, 35), (14, 36),
+            (15, 37), (15, 38),
+            (16, 39), (16, 40),
+        ]
+
+        true_labels = {
+            0: "S",
+            1: "4", 2: "3", 3: "2", 4: "1",
+            5: "3", 6: "2", 7: "1",
+            8: "2", 9: "1", 10: "4",
+            11: "1", 12: "4", 13: "3",
+            14: "4", 15: "3", 16: "2",
+            17: "2", 18: "1",
+            19: "1", 20: "3",
+            21: "3", 22: "2",
+            23: "1", 24: "4",
+            25: "4", 26: "2",
+            27: "2", 28: "1",
+            29: "4", 30: "3",
+            31: "3", 32: "1",
+            33: "1", 34: "4",
+            35: "3", 36: "2",
+            37: "2", 38: "4",
+            39: "4", 40: "3"
+        }
+
+        color_values = {
+            "S": {"color": YELLOW},
+            "1": {"color": BLUE},
+            "2": {"color": WHITE},
+            "3": {"color": RED},
+            "4": {"color": PURPLE}
+        }
+
+        vertices_colors = {i: color_values[true_labels[i]] for i in range(41)}
+
+        edges_colors = {
+            edge: {"stroke_color": color_values[true_labels[edge[1]]]["color"]}
+            for edge in edges
+        }
+
+        g = Graph(
+            vertices, edges, layout="tree", root_vertex=0,
+            layout_scale=6, labels=true_labels, 
+            edge_config=edges_colors,
+            vertex_config=vertices_colors,
+            layout_config={"vertex_spacing": (0.75, 1.75)},
+        )
+
+        self.play(
+            FadeOut(genVGroup),
+            Create(g.next_to(generalize, 0.25 * DOWN).scale(0.75)),
+            g.animate.shift(UP)
+        )
+        self.wait(2)
+
+        T = [
+            (4, 16, 40), (4, 16, 39), (4, 15, 38), (4, 15, 37),
+            (4, 14, 36), (4, 14, 35), (3, 13, 34), (3, 13, 33),
+            (3, 12, 32), (3, 12, 31), (3, 11, 30), (3, 11, 29),
+            (2, 10, 28), (2, 10, 27), (2, 9, 26), (2, 9, 25),
+            (2, 8, 24), (2, 8, 23), (1, 7, 22), (1, 7, 21),
+            (1, 6, 20), (1, 6, 19), (1, 5, 18), (1, 5, 17)
+        ]
+
+        L = [
+            [
+                Tex(
+                    true_labels[t],
+                    color=vertices_colors[t]["color"]
+                ) for t in T_i
+            ] for T_i in T
+        ]
+
+        pos = [
+            [g[i] for i in range(40, 16, -1)],
+            (0.5 * DOWN, 2.5 * DOWN, 4.5 * DOWN)
+        ]        
+        for i in range(len(L)):
+            self.play(
+                *[
+                    Write(
+                        L[i][j].next_to(
+                            pos[0][i],
+                            pos[1][j]
+                        )
+                    ) for j in range(3) 
+                ]
+            )
+
+        L_VGroups = [VGroup(*L_i) for L_i in L]
+        boxes_L = [
+            SurroundingRectangle(
+                VGroup(*L_i),
+                color=GREEN,
+                corner_radius=0.2
+            ) for L_i in L
+        ]
+
+        def fadeout_doubles(self, boxes, lists):
+            for i in range(3):
+                self.play(
+                    *[Write(b) for b in [boxes[i], boxes[i + 3]]],
+                )
+                self.wait()
+
+                self.play(
+                    ReplacementTransform(boxes[i + 3], boxes[i]),
+                    *[FadeOut(o) for o in lists[i + 3]],
+                    Unwrite(boxes[i]),
+                )
+                self.wait()
+
+        blocks = [VGroup(*L_VGroups[i:i + 6]) for i in range(0, 24, 6)]
+        block_boxes = [SurroundingRectangle(b) for b in blocks]
+
+        subtrees = [
+            VGroup(
+                g[4], g[16], g[15], g[14], g[40], g[39],
+                g[38], g[37], g[36], g[35]
+            ),
+            VGroup(
+                g[3], g[13], g[12], g[11], g[34], g[33],
+                g[32], g[31], g[30], g[29]
+            ),
+            VGroup(
+                g[2], g[10], g[9], g[8], g[28], g[27],
+                g[26], g[25], g[24], g[23]
+            ),
+            VGroup(
+                g[1], g[7], g[6], g[5], g[22], g[21],
+                g[20], g[19], g[18], g[17]
+            )
+        ]
+
+        subtrees_boxes = [
+            SurroundingRectangle(subtree) for subtree in subtrees
+        ]
+
+        self.play(
+            *[Write(o) for o in [block_boxes[0], subtrees_boxes[0]]]
+        )
+        self.wait()
+        fadeout_doubles(self, boxes=boxes_L, lists=L)
+
+        for i in range(3):
+            self.play(
+                ReplacementTransform(block_boxes[i], block_boxes[i + 1]),
+                ReplacementTransform(subtrees_boxes[i], subtrees_boxes[i + 1])
+            )
+            self.wait()
+            fadeout_doubles(self, boxes=boxes_L[(i + 1) * 6:], lists=L[(i + 1) * 6:])
+
+        self.wait()
+        
         
         
         
@@ -1657,7 +2039,7 @@ class Bac2024Sujet0Exo5Question4(Scene):
 
         
         exp_b = [
-            r"Le mot ordonnée indique simplement qu'on tient compte ",
+            r"Le mot ordonnée indique simplement qu'on tient compte de ",
             r"toutes les listes (même si elles ont le même nombre de pile).",
             r"Ça veut juste dire qu'on compte toutes les feuilles de l'arbre.",
             r"Chaque branche engendre 2 nouvelles branches.",
@@ -1939,7 +2321,7 @@ class Bac2024Sujet0Exo5Question4Arbre(Scene):
 # Question 5
 class Bac2024Sujet0Exo5Question5(Scene):
     def construct(self):
-        msg1 = "Bac USA 28 mars 2023 Sujet 2 Exercice 4"
+        msg1 = "Bac 2024 Sujet 0 Exercice 5"
         title5 = Title(f"{msg1}")
         self.add(title5.scale(1))
         self.wait(2)
@@ -1947,13 +2329,17 @@ class Bac2024Sujet0Exo5Question5(Scene):
         
 
         question5 = Title("Question 5").scale(0.55)
-        q5_00 = r"5. On considère variable aléatoire \(X\) "
-        q5_00 += r"suivant la loi binomiale \(\mathcal{B}(3; p)\)."
-        q5_01 = r"On sait que \(P(X = 0) = \frac{1}{125}.\)"
-        q5_02 = r"On peut affirmer que : "
-        q5_txt = [q5_00, q5_01, q5_02]
-        q5 = [Tex(r).scale(0.55) for r in q5_txt]
+        q5_txt = [
+            r"5. On effectue \(n\) lancers d'une pièce de monnaie équilibrée. ",
+            r"Le résultat d'un lancer est pile ou face.",
+            r"On considère la liste ordonnées des \(n\) résultats.",
+            r"Quelle est la probabilité d'obtenir au plus deux fois pile dans "
+            r"cette liste ?"
+        ]
 
+        q5 = [Tex(r).scale(0.55) for r in q5_txt]
+        q5VGroup = VGroup(*q5)
+            
         disp_tex_list(self, 
             previous_mobj=None,
             tex_list=q5,
@@ -1961,10 +2347,11 @@ class Bac2024Sujet0Exo5Question5(Scene):
             direction=DOWN
         )
         
-        a = r"a. \(p = \frac{1}{5}\)"
-        b = r"b. \(P(X = 1) = \frac{124}{125}\)"
-        c = r"c. \(p = \frac{4}{5}\)"
-        d = r"d. \(P(X = 1) = \frac{4}{5}\)"
+        a = r"a. \(\dfrac{n(n - 1)}{2}\)"
+        b = r"b. \(\dfrac{n(n - 1)}{2}\times\left(\dfrac{1}{2}\right)^n\)"
+        c = r"c. \(1 + n + \dfrac{n(n - 1)}{2}\)"
+        d = r"d. \(\left(1 + n + \dfrac{n(n - 1)}{2}\right)\times"
+        d += r"\left(\dfrac{1}{2}\right)^n\)"
         
         m1 = MobjectMatrix(
             [
@@ -1997,29 +2384,48 @@ class Bac2024Sujet0Exo5Question5(Scene):
         self.wait(4)
 
         ent = m1.get_entries()
-        sol_a = ent[0]
-        box_a = SurroundingRectangle(sol_a)
-        solution5 = Title("Réponse a")
+        sol_d = ent[3]
+        box_d = SurroundingRectangle(sol_d)
+        solution5 = Title("Réponse d")
         self.play(
             ReplacementTransform(attention_rep, solution5),
-            Write(box_a)
+            Write(box_d)
         )
         self.wait()
 
         
         explanation = Title("Explications")
-        self.play(ReplacementTransform(solution5, explanation))
+        self.play(
+            ReplacementTransform(solution5, explanation),
+            Unwrite(box_d)
+        )
         self.wait()
         
-        aRight00 = r"Puisqu'il y a 3 tirages alors \(P(X = 0) = p^3\)"
-        aRight01 = r"On en déduit que \(p = \frac{1}{5}\)."
+        exp_d = [
+            r"Chaque lancer d'une pièce suit une loi de Bernoulli.",
+            r"Les lancers sont indépendants.",
+            r"Soit \(X\) la variable aléatoire qui compte le nombre de pile.",
+            r"\(X\) suit une loi binomiale de paramètres "
+            r"\(\left(n ; \dfrac{1}{2}\right)\).",
+            r"La probabilité cherchée est : \(P(X\leqslant 2)\).",
+            r"Soit \(P(X = 0) + P(X = 1) + P(X = 2)\).",
+            r"\(P(X\leqslant 2) = \dfrac{1}{2^n}\left(\binom{n}{0} + "
+            r"\binom{n}{1} + \binom{n}{2}\right)\)",
+            r"D'où le résultat.",
+            r"\(P(X\leqslant 2) = \left(1 + n + \dfrac{n(n - 1)}{2}\right)"
+            r"\times\left(\dfrac{1}{2}\right)^n\)"
+            
+        ]
 
-        aRight = [aRight00, aRight01]
-        Ar = [Tex(r).scale(0.6) for r in aRight]
-        disp_calculations(self, 
-            previous_mobj=None,
-            calcs=Ar,
-            next2obj=m1,
+        d_res = [Tex(r).scale(0.6) for r in exp_d]
+
+        full_txt = VGroup(q5VGroup, m1)
+        
+        disp_tex_list(self, 
+            previous_mobj=full_txt,
+            tex_list=d_res,
+            next2obj=title5,
             direction=DOWN
-            )
+        )
+        
 
